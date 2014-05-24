@@ -14,3 +14,10 @@ SOURCES += main.cpp
 # Please do not modify the following two lines. Required for deployment.
 include(html5applicationviewer/html5applicationviewer.pri)
 qtcAddDeployment()
+
+OTHER_FILES += \
+    ../php/jscript/lib/jquery-1.11.1.js \
+    ../php/jscript/lib-debug/jquery-1.11.1.js \
+    ../php/jscript/ccr/main.js \
+    ../php/jscript/lib/domReady.js \
+    ../php/jscript/lib-debug/domReady.js
