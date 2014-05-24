@@ -25,7 +25,7 @@ define(['toastr', './redraw'], function (toastr, redraw) {
                 data: {
                     database: canvas.database,
                     scale_categ: new_scale_categ,
-                    view: ctx.transfRectView
+                    view: ctx.transfRectView(canvas)
                 },
                 dataType: 'JSON', // The data type expected of the server response.
                 error: function(xhr,status,error) {

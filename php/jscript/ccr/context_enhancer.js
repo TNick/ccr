@@ -1,4 +1,4 @@
-define(['', 'i18n!nls/tr'],
+define(['./dynres', 'i18n!nls/tr'],
 function (dynres, tr) {
 
 
@@ -90,8 +90,8 @@ function (dynres, tr) {
                 return scale_category;
             }
             ctx.transfRectView = function (canvas) {
-                var pt0 = this.transformedPoint(0,0);
-                var pt1 = this.transformedPoint(canvas.width,canvas.height);
+                var pt0 = ctx.transformedPoint(0,0);
+                var pt1 = ctx.transformedPoint(canvas.width,canvas.height);
                 var rectView = {
                     left:   pt0.x,
                     top:    pt0.y,
