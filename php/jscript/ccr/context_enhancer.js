@@ -1,7 +1,17 @@
-define(['i18n!nls/tr'],
-function (tr) {
+define(['', 'i18n!nls/tr'],
+function (dynres, tr) {
+
+
+
     return {
         enhance: function (canvas, ctx) {
+
+            function checkScaleChange() {
+                var new_scale_categ = ctx.getScaleCategory();
+                if (new_scale_categ !== canvas.loaded_scale) {
+                    dynres.changeScale(canvas, ctx, new_scale_categ);
+                }
+            }
 
             var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
             var xform = svg.createSVGMatrix();
@@ -16,12 +26,14 @@ function (tr) {
             var restore = ctx.restore;
             ctx.restore = function(){
                 xform = savedTransforms.pop();
+                checkScaleChange();
                 return restore.call(ctx);
             };
 
             var scale = ctx.scale;
             ctx.scale = function(sx,sy){
                 xform = xform.scaleNonUniform(sx,sy);
+                checkScaleChange();
                 return scale.call(ctx,sx,sy);
             };
             var rotate = ctx.rotate;
@@ -39,6 +51,7 @@ function (tr) {
                 var m2 = svg.createSVGMatrix();
                 m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
                 xform = xform.multiply(m2);
+                checkScaleChange();
                 return transform.call(ctx,a,b,c,d,e,f);
             };
             var setTransform = ctx.setTransform;
@@ -49,6 +62,7 @@ function (tr) {
                 xform.d = d;
                 xform.e = e;
                 xform.f = f;
+                checkScaleChange();
                 return setTransform.call(ctx,a,b,c,d,e,f);
             };
             var pt  = svg.createSVGPoint();

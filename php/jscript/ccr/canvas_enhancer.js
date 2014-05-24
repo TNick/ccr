@@ -3,6 +3,18 @@ function (geometry, redraw, tr) {
     return {
         enhance: function (canvas, ctx) {
 
+            // current chain of scale-dependent resources
+            canvas.loaded_scale = -1;
+            canvas.sd_images = [];
+            canvas.sd_vectors = [];
+            canvas.sd_html = [];
+
+            // holds the number of requests currently in the works
+            canvas.outstanding_requests = 0;
+
+            // timer event for updating the screen
+            canvas.timer_update_screen = undefined;
+
             var lastX = canvas.width/2, lastY = canvas.height/2;
             var dragStart,dragged;
 

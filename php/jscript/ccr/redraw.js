@@ -1,18 +1,6 @@
 define(['./geometry', 'nls/trdyn', 'i18n!nls/tr'],
 function (geometry, trdyn, tr) {
 
-    function requestResources(m, d, day_of_year, kbIndividualRes){
-
-    }
-
-
-    function drawClock(canvas, context, m, d, w_day, h_day, crt_scale){
-
-    }
-
-    function presentRemoteResource(canvas, context, m, d, crt_scale, res) {
-
-    }
 
     /**
      * Draws a day
@@ -21,21 +9,18 @@ function (geometry, trdyn, tr) {
      * @param {m} month (1 to 12)
      * @param {d} day (1 to 31)
      */
-    function drawDay(canvas, context, m, d, w_day, h_day, crt_scale){
+    function drawDay(canvas, context, m, d, w_day, h_day, scale_categ){
 
         var day_of_year = trdyn.dayOfYear(m, d);
+        var val_scale  = context.getUniformScale();
 
         // day name
-        if (crt_scale < 4) {
-            var day_size = 15 / (crt_scale);
-            var day_off = 2 / (crt_scale);
+        if ((scale_categ < 5) && (val_scale > 0.5)) {
+            var day_size = 15 / (val_scale);
+            var day_off = 2 / (val_scale);
             context.fillStyle = "white";
             context.font = "bold " + day_size + "px Arial";
             context.fillText("" + d, day_off, day_off+day_size);
-        }
-
-        if (crt_scale > 5) {
-            requestResources(m, d, day_of_year, function(res){ presentRemoteResource(canvas, context, m, d, crt_scale, res); })
         }
     }
 
@@ -46,16 +31,18 @@ function (geometry, trdyn, tr) {
      * @param {m} month (1 to 12)
      */
     function drawMonth(canvas, context, m){
-        var crt_scale  = context.getScaleCategory();
+
+        var scale_categ  = context.getScaleCategory();
+        var val_scale  = context.getUniformScale();
 
         context.strokeStyle = "#0000ff";
-        context.lineWidth   = 2;
+        context.lineWidth   = 2 / val_scale;
         context.fillStyle = "#009900";
         context.fillRect(0,0, canvas.config.monthTicketWidth,canvas.config.monthTicketHeight);
         context.strokeRect(0,0, canvas.config.monthTicketWidth,canvas.config.monthTicketHeight);
 
         // month name
-        if (crt_scale < 2) {
+        if (scale_categ < 2) {
             context.fillStyle = "blue";
             context.font = "bold 30px Arial";
             context.fillText(trdyn.monthName(m), 2, 32);
@@ -63,8 +50,8 @@ function (geometry, trdyn, tr) {
 
         // dividers for days
         context.strokeStyle = "#00ffff";
-        context.lineWidth   = 1;
-        var r = 0; var c = 0; var d = 1; var d_lim = trdyn.days[m];
+        context.lineWidth   = 1 / val_scale;
+        var r = 0; var c = 0; var d = 1; var d_lim = trdyn.days(m);
         var h_day = canvas.config.monthTicketHeight / 5;
         var w_day = canvas.config.monthTicketWidth / 7;
         var day_x = w_day; // don't draw first line over previous one
@@ -82,9 +69,9 @@ function (geometry, trdyn, tr) {
             bottom: h_day
         };
         var rectView = context.transfRectView(canvas);
-        var d_start = trdyn.dayStart[m];
+        var d_start = trdyn.dayStart(m);
         var d_fake = 1;
-        var month_overflow_d = trdyn.daysOverflow[m];
+        var month_overflow_d = trdyn.daysOverflow(m);
         for (r = 0; r < 5; ++r) {
             if (r > 0 ) {
                 context.beginPath();
@@ -99,7 +86,7 @@ function (geometry, trdyn, tr) {
                     if (d <= d_lim) {
                         if (geometry.rectanglesOverlap(rectView, rectDay)) {
                             context.translate(rectDay.left, rectDay.top);
-                            drawDay(canvas, context, m, d, w_day, h_day, crt_scale);
+                            drawDay(canvas, context, m, d, w_day, h_day, scale_categ);
                             context.translate(-rectDay.left, -rectDay.top);
                         }
                     } else {
@@ -111,7 +98,7 @@ function (geometry, trdyn, tr) {
                     // current month
                     if (geometry.rectanglesOverlap(rectView, rectDay)) {
                         context.translate(rectDay.left, rectDay.top);
-                        drawDay(canvas, context, m-1, month_overflow_d, w_day, h_day, crt_scale);
+                        drawDay(canvas, context, m-1, month_overflow_d, w_day, h_day, scale_categ);
                         context.translate(-rectDay.left, -rectDay.top);
                     }
                     ++month_overflow_d;
@@ -135,6 +122,18 @@ function (geometry, trdyn, tr) {
             context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
 
             canvas.config.monthLayout(canvas, context, drawMonth);
+
+            // images, vectors and text
+            canvas.sd_images.forEach(function(item){
+                //item.draw(canvas, context);
+            });
+            canvas.sd_vectors.forEach(function(item){
+                //item.draw(canvas, context);
+            });
+            canvas.sd_html.forEach(function(item){
+                //item.draw(canvas, context);
+            });
+
         } // enhance
     };
 });

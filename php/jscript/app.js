@@ -8,6 +8,7 @@ requirejs.config({
     paths: {
         app: '../ccr',
         nls: '../nls',
+        toastr: '../toastr',
         jquery: 'jquery-1.11.1'
     }
 });

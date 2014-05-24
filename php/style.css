@@ -75,6 +75,14 @@ body {
 
 }
 
+@media only screen and (min-width: 1200px) {
+    /* Large screen, non-retina */
+    #map {
+        width: 1190px;
+        height: 800px;
+    }
+}
+
 @media only screen and (min-width: 1300px) {
     /* Large screen, non-retina */
     #map {
@@ -82,7 +90,6 @@ body {
         height: 800px;
     }
 }
-
 @media only screen and (min-device-pixel-ratio: 2) and (min-width: 1300px){
     /* Large screen, retina, stuff to override above media query */
     #map {
