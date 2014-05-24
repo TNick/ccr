@@ -12,15 +12,20 @@ body {
 }
 
 #map {
-    width: 580px;
-    height: 327px;
-
     background: #322;
 
     cursor: pointer;
     cursor: grab;
     cursor: -webkit-grab;
     cursor: -moz-grab;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
 }
 
 #map:active {
@@ -28,4 +33,60 @@ body {
     cursor: grabbing;
     cursor: -webkit-grabbing;
     cursor: -moz-grabbing;
+}
+
+
+/* ============================= */
+/*   device specific overrides   */
+/* ============================= */
+
+@media only screen and (min-width: 320px) {
+    /* Small screen, non-retina */
+    #map {
+        width: 310px;
+        height: 310px;
+    }
+
+}
+
+@media only screen and (min-device-pixel-ratio: 2) and (min-width: 320px) {
+    /* Small screen, retina, stuff to override above media query */
+    #map {
+        width: 310px;
+        height: 310px;
+    }
+
+}
+
+@media only screen and (min-width: 700px) {
+    /* Medium screen, non-retina */
+    #map {
+        width: 690px;
+        height: 700px;
+    }
+}
+
+@media only screen and (min-device-pixel-ratio: 2) and (min-width: 700px) {
+    /* Medium screen, retina, stuff to override above media query */
+    #map {
+        width: 690px;
+        height: 700px;
+    }
+
+}
+
+@media only screen and (min-width: 1300px) {
+    /* Large screen, non-retina */
+    #map {
+        width: 1200px;
+        height: 800px;
+    }
+}
+
+@media only screen and (min-device-pixel-ratio: 2) and (min-width: 1300px){
+    /* Large screen, retina, stuff to override above media query */
+    #map {
+        width: 1200px;
+        height: 800px;
+    }
 }
