@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    font-size: 2em;
+    background-color: white;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#map {
+    width: 580px;
+    height: 327px;
+
+    background: #322;
+
+    cursor: pointer;
+    cursor: grab;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+}
+
+#map:active {
+    cursor: pointer;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+}
