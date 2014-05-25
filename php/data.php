@@ -81,8 +81,8 @@ mysql_select_db($database) or returnError('Could not select database');
 
 // we define a polygone (a rectangle) and ask for all records that intersect that rectangle
 // and are part of specified layer
-$query = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=%5$d AND Intersects( bbox, PolyFromText( 'POLYGON((%1$f %2$f,%3$f %2$f,%3$f %4$f,%1$f %4$f))' ) ) LIMIT 10000000;";
-$query = sprintf($query, $view->{"left"}, $view->{"top"}, $view->{"right"}, $view->{"bottom"}, $scale_categ);
+$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=%5$d AND Intersects( bbox, PolyFromText( 'POLYGON((%1$f %2$f,%3$f %2$f,%3$f %4$f,%1$f %4$f))' ) ) LIMIT 10000000;";
+$query = sprintf($query_base, $view->{"left"}, $view->{"top"}, $view->{"right"}, $view->{"bottom"}, $scale_categ);
 $responses = mysql_query($query) or returnError('Query failed: ' . mysql_error());
 
 // create json response
