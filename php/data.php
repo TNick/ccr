@@ -53,7 +53,7 @@ if ($host) {
     }
     $link = mysql_connect($host, getenv('OPENSHIFT_MYSQL_DB_USERNAME'), getenv('OPENSHIFT_MYSQL_DB_PASSWORD'))
         or returnError('Could not connect: ' . mysql_error());
-    $database = getenv('OPENSHIFT_MYSQL_DB_URL');
+    $database = getenv('OPENSHIFT_APP_NAME');
 } else {
     returnError(json_encode("Unknown environment"));
 }
