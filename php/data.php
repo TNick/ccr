@@ -16,7 +16,7 @@ $responses = array();
 //    $responses[] = array("name" => $i, "email" => $userName . " " . $password . " " . $emailProvider);
 //}
 $responses[] = array("kind" => "image", "pos" => "10, 10", "url" => "https://www.gravatar.com/avatar/" . "2a32c3039116405612b802f639557ffb?s=32&d=identicon&r=PG");
-$responses[] = array("kind" => "vector", "pos" => "20, 10", "vert" => {}, "color" => "blue");
+$responses[] = array("kind" => "vector", "pos" => "20, 10", "vert" => array(1.0,2.2,3.5,4.4), "color" => "blue");
 $responses[] = array("kind" => "html", "pos" => "30, 10", "value" => "<h1>Some text</h1>", "color" => "red");
 
 // JSon response format is :
