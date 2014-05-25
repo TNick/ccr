@@ -26,8 +26,7 @@ $data_back = json_decode($raw_data);
 // {"database":"ccr","scale_categ":"2","view":{"left":"10", "top":"10", "right":"100", "bottom":"100"}}
 
 debugvar($data_back);
-debugvar($_ENV);
-debugvar($_SENV);
+//debugvar($_ENV);
 
 // set json string to php variables
 $database = 'ccr';
@@ -43,20 +42,18 @@ if (array_key_exists("view", $data_back)) {
     $view = $data_back->{"view"};
 }
 
-
-
-
 // Connecting, selecting database
 
 // OPENSHIFT specific
-$host = getenv('OPENSHIFT_DB_HOST');
-$port = getenv('OPENSHIFT_DB_PORT');
+$host = getenv('OPENSHIFT_MYSQL_DB_HOST');
+$port = getenv('OPENSHIFT_MYSQL_DB_PORT');
 if ($host) {
     if ($port) {
         $host = $host . ":" . $port;
     }
-    $link = mysql_connect($host, getenv('OPENSHIFT_DB_USERNAME'), getenv('OPENSHIFT_DB_PASSWORD'))
+    $link = mysql_connect($host, getenv('OPENSHIFT_MYSQL_DB_USERNAME'), getenv('OPENSHIFT_MYSQL_DB_PASSWORD'))
         or returnError('Could not connect: ' . mysql_error());
+    $database = getenv('OPENSHIFT_MYSQL_DB_URL');
 } else {
     returnError(json_encode("Unknown environment"));
 }
@@ -64,7 +61,7 @@ debugmsg('Connected successfully');
 
 
 mysql_select_db($database) or returnError('Could not select database');
-$query = 'SELECT * FROM my_table';
+$query = 'SELECT * FROM test';
 $responses = mysql_query($query) or returnError('Query failed: ' . mysql_error());
 
 while ($line = mysql_fetch_array($responses, MYSQL_ASSOC)) {
