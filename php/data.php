@@ -89,13 +89,13 @@ $responses = mysql_query($query) or returnError('Query failed: ' . mysql_error()
 $responses = array();
 
 while ($row = mysql_fetch_assoc($responses, MYSQL_ASSOC)) {
-    debugmsg $row["kind"];
-    debugmsg $row["bbox"];
-    debugmsg $row["assoc_data"];
+    debugmsg($row["kind"]);
+    debugmsg($row["bbox"]);
+    debugmsg($row["assoc_data"]);
 
     $assoc_data = unserialize($row["assoc_data"]); // $row["assoc_data"]) = serialize($assoc_data);
     $coords = getRealNumbers($row["bbox"]);
-    $proper_box = array($coords[0], $coords[1], $coords[2], $coords[5])
+    $proper_box = array($coords[0], $coords[1], $coords[2], $coords[5]);
     $responses[] = array_merge(array("kind" => $row["kind"], "box" => $proper_box ), $assoc_data);
 }
 
