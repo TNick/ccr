@@ -34,14 +34,14 @@ define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  
                     --canvas.outstanding_requests;
                 },
                 contentType: 'JSON', // The content type used when sending data to the server
-                data: {
+                data: JSON.stringify({
                     database: canvas.database,
                     scale_categ: new_scale_categ,
                     view: ctx.transfRectView(canvas)
-                },
+                }),
                 dataType: 'JSON', // The data type expected of the server response.
                 error: function(xhr,status,error) {
-                    toastr.error("Failed to retreive resource: " + error);
+                    toastr.error('Failed to retreive resource: ' + error);
                 },
                 global: false,
                 password: canvas.password,
@@ -57,8 +57,10 @@ define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  
                             canvas.sd_html.push(new DynResHtml(canvas, result));
                         } else if (result.kind === 'text') {
                             canvas.sd_html.push(new DynResText(canvas, result));
+                        } else if (result.kind === 'error') {
+                            toastr.error('Failed to retreive resource: ' + result.value);
                         }
-                    });
+                        });
                     // schedule an update
                     canvas.scheduleUpdate();
                 },

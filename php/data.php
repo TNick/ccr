@@ -1,14 +1,86 @@
 <?php
+function debugmsg($foo)
+{
+   file_put_contents('php://stderr', print_r(
+   "\n=============================================================\n", TRUE));
+   file_put_contents('php://stderr', print_r($foo, TRUE));
+   file_put_contents('php://stderr', print_r(
+   "\n=============================================================\n", TRUE));
+}
+function debugvar($foo)
+{
+    debugmsg(var_export($foo, true));
+}
+function returnError($foo)
+{
+    $responses = array();
+    $responses[] = array("kind" => "error", "value" => $foo);
+    die(json_encode($responses));
+}
+
+
+// read JSon input
+$raw_data = file_get_contents('php://input');
+$data_back = json_decode($raw_data);
 // JSon request format is :
 // {"database":"ccr","scale_categ":"2","view":{"left":"10", "top":"10", "right":"100", "bottom":"100"}}
 
-// read JSon input
-$data_back = json_decode(file_get_contents('php://input'));
+debugvar($data_back);
+debugvar($_ENV);
+debugvar($_SENV);
 
 // set json string to php variables
-$database = $data_back->{"database"};
-$scale_categ = $data_back->{"scale_categ"};
-$view = $data_back->{"view"};
+$database = 'ccr';
+if (array_key_exists("database", $data_back)) {
+    $database = $data_back->{"database"};
+}
+$scale_categ = 1;
+if (array_key_exists("scale_categ", $data_back)) {
+    $scale_categ = $data_back->{"scale_categ"};
+}
+$view = NULL;
+if (array_key_exists("view", $data_back)) {
+    $view = $data_back->{"view"};
+}
+
+
+
+
+// Connecting, selecting database
+
+// OPENSHIFT specific
+$host = getenv('OPENSHIFT_DB_HOST');
+$port = getenv('OPENSHIFT_DB_PORT');
+if ($host) {
+    if ($port) {
+        $host = $host . ":" . $port;
+    }
+    $link = mysql_connect($host, getenv('OPENSHIFT_DB_USERNAME'), getenv('OPENSHIFT_DB_PASSWORD'))
+        or returnError('Could not connect: ' . mysql_error());
+} else {
+    returnError(json_encode("Unknown environment"));
+}
+debugmsg('Connected successfully');
+
+
+mysql_select_db($database) or returnError('Could not select database');
+$query = 'SELECT * FROM my_table';
+$responses = mysql_query($query) or returnError('Query failed: ' . mysql_error());
+
+while ($line = mysql_fetch_array($responses, MYSQL_ASSOC)) {
+    foreach ($line as $col_value) {
+        debugmsg($col_value);
+    }
+}
+
+// Free resultset
+mysql_free_result($responses);
+
+// Closing connection
+mysql_close($link);
+
+
+
 
 // create json response
 $responses = array();
