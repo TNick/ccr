@@ -7,3 +7,5 @@ app/[Cc]onfig/database.php
 !empty
 .project
 *~
+*.user
+

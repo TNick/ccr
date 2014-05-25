@@ -48,6 +48,7 @@ define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  
                 processData: true,
                 success: function(result_array,status,xhr) {
                     toastr.success("data back");
+                    console.log(result_array);
                     result_array.forEach(function(result){
                         if (result.kind === 'image') {
                             canvas.sd_images.push(new DynResImg(canvas, result));
