@@ -3,6 +3,9 @@ function (geometry, redraw, tr) {
     return {
         enhance: function (canvas, ctx) {
 
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas. offsetHeight;
+
             // current chain of scale-dependent resources
             canvas.loaded_scale = -1;
             canvas.sd_images = [];
@@ -19,11 +22,16 @@ function (geometry, redraw, tr) {
             var dragStart,dragged;
 
             canvas.addEventListener('mousedown',function(evt){
-                document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
-                lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
-                lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
-                dragStart = ctx.transformedPoint(lastX,lastY);
-                dragged = false;
+                if (evt.button === 0) { // left button
+                    zoom(evt.shiftKey ? -1 : 1 );
+                } else if (evt.button === 1) { // middle button
+                    $('#map').addClass('mousegrabbing');
+                    document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+                    lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+                    lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+                    dragStart = ctx.transformedPoint(lastX,lastY);
+                    dragged = false;
+                }
             },false);
             canvas.addEventListener('mousemove',function(evt){
                 lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
@@ -36,8 +44,8 @@ function (geometry, redraw, tr) {
                 }
             },false);
             canvas.addEventListener('mouseup',function(evt){
+                $('#map').removeClass('mousegrabbing');
                 dragStart = null;
-                if (!dragged) zoom(evt.shiftKey ? -1 : 1 );
             },false);
 
             var scaleFactor = 1.1;
@@ -55,8 +63,33 @@ function (geometry, redraw, tr) {
                 if (delta) zoom(delta);
                 return evt.preventDefault() && false;
             };
+
+            var handleResize = function(evt){
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas. offsetHeight;
+                lastX = canvas.width/2;
+                lastY = canvas.height/2;
+                redraw.now(canvas, ctx);
+            };
+
             canvas.addEventListener('DOMMouseScroll',handleScroll,false);
             canvas.addEventListener('mousewheel',handleScroll,false);
+
+            if (window.attachEvent) {
+                window.attachEvent('onresize', handleResize);
+            } else if (window.addEventListener) {
+                window.addEventListener('resize', handleResize, false);
+            } else {
+                //The browser does not support Javascript event binding
+            }
+
+            canvas.scheduleUpdate = function() {
+                if (typeof this.timer_update_screen === 'undefined') {
+                    this.timer_update_screen = window.setTimeout(function(){
+                        canvas.timer_update_screen = undefined;
+                        redraw.now(canvas, ctx)}, 1000);
+                }
+            };
 
         } // enhance
     };

@@ -20,4 +20,7 @@ OTHER_FILES += \
     ../php/jscript/lib-debug/jquery-1.11.1.js \
     ../php/jscript/ccr/main.js \
     ../php/jscript/lib/domReady.js \
-    ../php/jscript/lib-debug/domReady.js
+    ../php/jscript/lib-debug/domReady.js \
+    ../php/jscript/ccr/DynResHtml.js \
+    ../php/jscript/ccr/DynResImg.js \
+    ../php/jscript/ccr/DynResVect.js

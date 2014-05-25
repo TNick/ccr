@@ -1,4 +1,5 @@
-define(['toastr', './redraw'], function (toastr, redraw) {
+define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  './DynResVect', ],
+       function (toastr, redraw, DynResText, DynResHtml, DynResImg, DynResVect) {
 
 
     return {
@@ -6,6 +7,17 @@ define(['toastr', './redraw'], function (toastr, redraw) {
          * tell if two rectangles overlap
          */
         changeScale: function (canvas, ctx, new_scale_categ){
+            // inform objects that they are being released
+            canvas.sd_images.forEach(function(item){
+                item.aboutToDie();
+            });
+            canvas.sd_vectors.forEach(function(item){
+                item.aboutToDie();
+            });
+            canvas.sd_html.forEach(function(item){
+                item.aboutToDie();
+            });
+
             // clear resources from previous step
             canvas.sd_images = [];
             canvas.sd_vectors = [];
@@ -34,22 +46,21 @@ define(['toastr', './redraw'], function (toastr, redraw) {
                 global: false,
                 password: canvas.password,
                 processData: true,
-                success: function(result,status,xhr) {
-                    //$("#div1").html(result);
-                    toastr.success("data back" + result);
-                    if (result.kind === 'image') {
-                        canvas.sd_images.push(new DynResImg());
-                    } else if (result.kind === 'vector') {
-                        canvas.sd_vectors.push(new DynResVect());
-                    } else if (result.kind === 'html') {
-                        canvas.sd_html.push(new DynResHtml());
-                    }
+                success: function(result_array,status,xhr) {
+                    toastr.success("data back");
+                    result_array.forEach(function(result){
+                        if (result.kind === 'image') {
+                            canvas.sd_images.push(new DynResImg(canvas, result));
+                        } else if (result.kind === 'vector') {
+                            canvas.sd_vectors.push(new DynResVect(canvas, result));
+                        } else if (result.kind === 'html') {
+                            canvas.sd_html.push(new DynResHtml(canvas, result));
+                        } else if (result.kind === 'text') {
+                            canvas.sd_html.push(new DynResText(canvas, result));
+                        }
+                    });
                     // schedule an update
-                    if (typeof canvas.timer_update_screen === 'undefined') {
-                        canvas.timer_update_screen = setTimeout(function(){
-                            canvas.timer_update_screen = undefined;
-                            redraw.now(canvas, ctx)}, 1000);
-                    }
+                    canvas.scheduleUpdate();
                 },
                 timeout: 5000,
                 type: 'POST',

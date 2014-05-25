@@ -28,23 +28,20 @@ define(['require',
     canvas.config = canvas_options;
     var ctx = canvas.getContext('2d');
 
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas. offsetHeight;
-
     // adjust for our usage
     cx_enh.enhance(canvas, ctx);
     cv_enh.enhance(canvas, ctx);
 
     // adjust toastr
     toastr.options.closeButton = true;
-    toastr.options.showEasing = 'swing';
-    toastr.options.hideEasing = 'linear';
     toastr.options.showDuration = 400;
+    toastr.options.showMethod = 'fadeIn';
+    toastr.options.showEasing = 'swing';
+    toastr.options.hideMethod = 'fadeOut';
+    toastr.options.hideEasing = 'linear';
     toastr.options.hideDuration = 1200;
     toastr.options.timeOut = 6000;
     toastr.options.extendedTimeOut = 2000;
-    toastr.options.showMethod = 'fadeIn';
-    toastr.options.hideMethod = 'fadeOut';
 
     // and paint it fo the first time
     redraw.now(canvas, ctx);

@@ -78,15 +78,16 @@ function (dynres, tr) {
                 var scale_category;
                 if (crt_scale < 4) {
                     scale_category = 1;
-                } else if (crt_scale < 8) {
+                } else if (crt_scale < 15) {
                     scale_category = 2;
-                } else if (crt_scale < 12) {
+                } else if (crt_scale < 30) {
                     scale_category = 3;
-                } else if (crt_scale < 16) {
+                } else if (crt_scale < 60) {
                     scale_category = 4;
-                } else { // if (crt_scale < 20) {
+                } else { // if (crt_scale < 120) {
                     scale_category = 5;
                 }
+                // onsole.log(scale_category + ' ' + crt_scale);
                 return scale_category;
             }
             ctx.transfRectView = function (canvas) {

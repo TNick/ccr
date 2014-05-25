@@ -15,10 +15,6 @@ body {
     background: #322;
 
     cursor: pointer;
-    cursor: grab;
-    cursor: -webkit-grab;
-    cursor: -moz-grab;
-
     position: absolute;
     top: 0;
     bottom: 0;
@@ -29,11 +25,22 @@ body {
 }
 
 #map:active {
+}
+
+.mousecangrab {
+    cursor: pointer;
+    cursor: grab;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+}
+
+.mousegrabbing {
     cursor: pointer;
     cursor: grabbing;
     cursor: -webkit-grabbing;
     cursor: -moz-grabbing;
 }
+
 
 
 /* ============================= */

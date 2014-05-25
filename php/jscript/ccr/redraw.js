@@ -125,13 +125,13 @@ function (geometry, trdyn, tr) {
 
             // images, vectors and text
             canvas.sd_images.forEach(function(item){
-                //item.draw(canvas, context);
+                item.draw(canvas, context);
             });
             canvas.sd_vectors.forEach(function(item){
-                //item.draw(canvas, context);
+                item.draw(canvas, context);
             });
             canvas.sd_html.forEach(function(item){
-                //item.draw(canvas, context);
+                item.draw(canvas, context);
             });
 
         } // enhance
