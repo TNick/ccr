@@ -122,11 +122,11 @@ try {
 	$myPDO = $pdo->query($query_base);
 	while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
 		debugmsg($row["kind"]);
-		debugmsg($row["bbox"]);
+		debugmsg($row["AsText(bbox)"]);
 		debugmsg($row["assoc_data"]);
 
 		$assoc_data = unserialize($row["assoc_data"]); // $row["assoc_data"]) = serialize($assoc_data);
-		$coords = getRealNumbers($row["bbox"]);
+		$coords = getRealNumbers($row["AsText(bbox)"]);
 		$proper_box = array($coords[0], $coords[1], $coords[2], $coords[5]);
 		$responses[] = array_merge(array("kind" => $row["kind"], "box" => $proper_box ), $assoc_data);
 	}
