@@ -102,7 +102,7 @@ debugmsg('Connected successfully');
 // create json response
 $responses = array();
 
-$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=:layer AND Intersects( bbox, PolyFromText( 'POLYGON((:left :top,:right :top,:right :bottom,:left bottom))' ) ) LIMIT 10000000;";
+$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=:layer AND Intersects( bbox, PolyFromText( 'POLYGON((:left :top,:right :top,:right :bottom,:left :bottom))' ) ) LIMIT 10000000;";
 try {
 	$myPDO = $pdo->prepare($query_base, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     
