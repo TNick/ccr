@@ -102,20 +102,28 @@ debugmsg('Connected successfully');
 // create json response
 $responses = array();
 
-$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=:layer AND Intersects( bbox, PolyFromText( 'POLYGON((:left1 :top1,:right1 :top2,:right2 :bottom1,:left2 :bottom2))' ) ) LIMIT 10000000;";
+$d_left = 0.0;
+$d_top = 0.0;
+$d_right = 0.0;
+$d_bottom = 0.0;
+$i_scale_categ = 1;
+
 try {
-	$myPDO = $pdo->prepare($query_base, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-    $myPDO->bindParam(':layer', $scale_categ, PDO::PARAM_INT);
-    $myPDO->bindParam(':left1', $view->{'left'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':top1', $view->{'top'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':right1', $view->{'right'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':bottom1', $view->{'bottom'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':left2', $view->{'left'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':top2', $view->{'top'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':right2', $view->{'right'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':bottom2', $view->{'bottom'}, PDO::PARAM_STR);
-	if($myPDO->execute()) {
-		 
+	try {
+		// make sure values are numbers
+		$d_left = floatval($view->{'left'});
+		$d_top = floatval($view->{'top'});
+		$d_right = floatval($view->{'right'});
+		$d_bottom = floatval($view->{'bottom'});
+		$i_scale_categ = intval($scale_categ);
+	} catch(Exception $ex) {
+		debugvar($view);
+		debugvar($ex);
+		returnError(json_encode("Input data not properly encoded: " . $ex->getMessage()));
+	}
+	
+	$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=".$i_scale_categ." AND Intersects( bbox, PolyFromText( 'POLYGON((".$d_left." ".$d_top.",".$d_right." ".$d_top.",".$d_right." ".$d_bottom.",".$d_left." ".$d_bottom."))' ) ) LIMIT 10000000;";
+	if($myPDO->query($query_base)) {
 		while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
 			debugmsg($row["kind"]);
 			debugmsg($row["bbox"]);
