@@ -105,13 +105,12 @@ $responses = array();
 $query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=:layer AND Intersects( bbox, PolyFromText( 'POLYGON((:left :top,:right :top,:right :bottom,:left :bottom))' ) ) LIMIT 10000000;";
 try {
 	$myPDO = $pdo->prepare($query_base, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-    
-	if($myPDO->execute(array(':layer' => $scale_categ, 
-						     ':left' => $view->{'left'}, 
-						     ':top' => $view->{'top'}, 
-						     ':right' => $view->{'right'}, 
-						     ':bottom' => $view->{'bottom'} )))
-	{
+    $myPDO->bindParam(':layer', $scale_categ, PDO::PARAM_INT);
+    $myPDO->bindParam(':left', $view->{'left'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':top', $view->{'top'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':right', $view->{'right'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':bottom', $view->{'bottom'}, PDO::PARAM_STR);
+	if($myPDO->execute()) {
 		 
 		while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
 			debugmsg($row["kind"]);
@@ -126,7 +125,8 @@ try {
 	}
     
 } catch(PDOException $ex) {
-	returnError(json_encode("Failed to querry database: " . $ex->getMessage()));
+	debugvar($ex);
+	returnError(json_encode("Failed to query database: " . $ex->getMessage()));
 }
 
 
