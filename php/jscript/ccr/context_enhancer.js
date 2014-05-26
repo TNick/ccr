@@ -26,7 +26,7 @@ function (dynres, tr) {
             var restore = ctx.restore;
             ctx.restore = function(){
                 xform = savedTransforms.pop();
-                if (!ctx.canvas.internal_change) {
+                if (!ctx.internal_change) {
                     checkScaleChange();
                 }
                 return restore.call(ctx);
@@ -53,7 +53,7 @@ function (dynres, tr) {
                 var m2 = svg.createSVGMatrix();
                 m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
                 xform = xform.multiply(m2);
-                if (!ctx.canvas.internal_change) {
+                if (!ctx.internal_change) {
                     checkScaleChange();
                 }
                 return transform.call(ctx,a,b,c,d,e,f);
@@ -66,7 +66,7 @@ function (dynres, tr) {
                 xform.d = d;
                 xform.e = e;
                 xform.f = f;
-                if (!ctx.canvas.internal_change) {
+                if (!ctx.internal_change) {
                     checkScaleChange();
                 }
                 return setTransform.call(ctx,a,b,c,d,e,f);
