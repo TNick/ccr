@@ -102,14 +102,18 @@ debugmsg('Connected successfully');
 // create json response
 $responses = array();
 
-$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=:layer AND Intersects( bbox, PolyFromText( 'POLYGON((:left :top,:right :top,:right :bottom,:left :bottom))' ) ) LIMIT 10000000;";
+$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=:layer AND Intersects( bbox, PolyFromText( 'POLYGON((:left1 :top1,:right1 :top2,:right2 :bottom1,:left2 :bottom2))' ) ) LIMIT 10000000;";
 try {
 	$myPDO = $pdo->prepare($query_base, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     $myPDO->bindParam(':layer', $scale_categ, PDO::PARAM_INT);
-    $myPDO->bindParam(':left', $view->{'left'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':top', $view->{'top'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':right', $view->{'right'}, PDO::PARAM_STR);
-    $myPDO->bindParam(':bottom', $view->{'bottom'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':left1', $view->{'left'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':top1', $view->{'top'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':right1', $view->{'right'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':bottom1', $view->{'bottom'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':left2', $view->{'left'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':top2', $view->{'top'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':right2', $view->{'right'}, PDO::PARAM_STR);
+    $myPDO->bindParam(':bottom2', $view->{'bottom'}, PDO::PARAM_STR);
 	if($myPDO->execute()) {
 		 
 		while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
