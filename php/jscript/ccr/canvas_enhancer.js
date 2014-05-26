@@ -1,9 +1,10 @@
 define(['./geometry',
         './redraw',
         './month_layouts',
+        'cookies',
         './common_enhance',
         'i18n!nls/tr'],
-function (geometry, redraw, monthLayouts, comnEnh, tr) {
+function (geometry, redraw, monthLayouts, cookies, comnEnh, tr) {
 
     function commonResizeOp(canvas) {
         //        canvas.width = canvas.offsetWidth;
@@ -126,7 +127,49 @@ function (geometry, redraw, monthLayouts, comnEnh, tr) {
                 comnEnh.remClass('toolb_zoomin','toolb_pressed');
                 comnEnh.remClass('toolb_zoomout','toolb_pressed');
                 comnEnh.addClass('toolb_'+new_mode,'toolb_pressed');
+                canvas.saveConfigToCookie(canvas.config);
             };
+
+            canvas.loadConfigFromCookie = function (canvas_options) {
+                var prev_v;
+                prev_v = cookies.get('canvas_click_action');
+                if (prev_v) {
+                    canvas_options.click_action = prev_v;
+                }
+                prev_v = cookies.get('canvas_database');
+                if (prev_v) {
+                    canvas_options.database = prev_v;
+                }
+                prev_v = cookies.get('canvas_dataUrl');
+                if (prev_v) {
+                    canvas_options.dataUrl = prev_v;
+                }
+                prev_v = cookies.get('canvas_monthLayoutOnResize');
+                if (prev_v) {
+                    canvas_options.monthLayoutOnResize = prev_v;
+                }
+                prev_v = cookies.get('canvas_monthLayout');
+                if (prev_v && (canvas_options.monthLayoutOnResize === 'keep')) {
+                    if (prev_v === '1') {
+                        canvas_options.monthLayout = monthLayouts.oneColumn;
+                    } else if (prev_v === '2') {
+                        canvas_options.monthLayout = monthLayouts.twoColumns;
+                    } else if (prev_v === '3') {
+                        canvas_options.monthLayout = monthLayouts.threeColumns;
+                    } else if (prev_v === '4') {
+                        canvas_options.monthLayout = monthLayouts.fourColumns;
+                    }
+                }
+            };
+
+            canvas.saveConfigToCookie = function(canvas_options) {
+                cookies.set('canvas_click_action', canvas_options.click_action);
+                cookies.set('canvas_database', canvas_options.database);
+                cookies.set('canvas_dataUrl', canvas_options.dataUrl);
+                cookies.set('canvas_monthLayoutOnResize', canvas_options.monthLayoutOnResize);
+                cookies.set('canvas_monthLayout', monthLayouts.columnCount());
+            };
+
 
         } // enhance
     };

@@ -14,9 +14,10 @@ function (geometry, tr) {
             ctx.translate(-pos_x, -pos_y);
         }
     } // drawMonth
-
+    var crt_layout = 0;
 
     return {
+        columnCount: function() { return crt_layout; },
 
         oneColumn: function (canvas, ctx, kbMonthDrawer){
             var i, m;
@@ -29,6 +30,7 @@ function (geometry, tr) {
                 pos_y += canvas.config.monthTicketHeight;
                 ++m;
             }
+            crt_layout = 1;
         }, // oneColumn
 
         twoColumns: function (canvas, ctx, kbMonthDrawer){
@@ -46,6 +48,7 @@ function (geometry, tr) {
                 pos_y += canvas.config.monthTicketHeight;
                 pos_x = 0.0;
             }
+            crt_layout = 2;
         }, // twoColumns
 
         threeColumns: function (canvas, ctx, kbMonthDrawer){
@@ -63,6 +66,7 @@ function (geometry, tr) {
                 pos_y += canvas.config.monthTicketHeight;
                 pos_x = 0.0;
             }
+            crt_layout = 3;
         }, // threeColumns
 
         fourColumns: function (canvas, ctx, kbMonthDrawer){
@@ -80,6 +84,7 @@ function (geometry, tr) {
                 pos_y += canvas.config.monthTicketHeight;
                 pos_x = 0.0;
             }
+            crt_layout = 4;
         } // fourColumns
     };
 });

@@ -22,6 +22,11 @@ function (geometry, trdyn, tr) {
             context.font = "bold " + day_size + "px Arial";
             context.fillText("" + d, day_off, day_off+day_size);
         }
+
+        if ((scale_categ < 5) && (val_scale > 0.5)) {
+
+        }
+
     }
 
     /**

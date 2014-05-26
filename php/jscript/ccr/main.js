@@ -56,6 +56,7 @@ define(['require',
     // adjust for our usage
     cx_enh.enhance(canvas, ctx);
     cv_enh.enhance(canvas, ctx);
+    canvas.loadConfigFromCookie(canvas.config);
 
     // adjust toastr
     toastr.options.closeButton = true;
