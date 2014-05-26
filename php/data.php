@@ -82,10 +82,16 @@ if ($host) {
     returnError(json_encode("Unknown environment"));
 }
 
-$pdo = new PDO ('mysql:host=' . $host . ';dbname=' . $database . ';charset=utf8', $user, $pass);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
+$pdo = NULL
+try {
+	$pdo = new PDO ('mysql:host=' . $host . ';dbname=' . $database . ';charset=utf8', $user, $pass);
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+} catch(PDOException $ex) {
+	debugvar($ex);
+	returnError(json_encode("Failed to connect to database database: " . $ex->getMessage()));
+}
 debugmsg('Connected successfully');
 
 
@@ -123,18 +129,19 @@ try {
 	}
 	
 	$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=".$i_scale_categ." AND Intersects( bbox, PolyFromText( 'POLYGON((".$d_left." ".$d_top.",".$d_right." ".$d_top.",".$d_right." ".$d_bottom.",".$d_left." ".$d_bottom."))' ) ) LIMIT 10000000;";
-	if($myPDO->query($query_base)) {
-		while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
-			debugmsg($row["kind"]);
-			debugmsg($row["bbox"]);
-			debugmsg($row["assoc_data"]);
+	
+	$myPDO = $pdo->query($query_base))
+	while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
+		debugmsg($row["kind"]);
+		debugmsg($row["bbox"]);
+		debugmsg($row["assoc_data"]);
 
-			$assoc_data = unserialize($row["assoc_data"]); // $row["assoc_data"]) = serialize($assoc_data);
-			$coords = getRealNumbers($row["bbox"]);
-			$proper_box = array($coords[0], $coords[1], $coords[2], $coords[5]);
-			$responses[] = array_merge(array("kind" => $row["kind"], "box" => $proper_box ), $assoc_data);
-		}
+		$assoc_data = unserialize($row["assoc_data"]); // $row["assoc_data"]) = serialize($assoc_data);
+		$coords = getRealNumbers($row["bbox"]);
+		$proper_box = array($coords[0], $coords[1], $coords[2], $coords[5]);
+		$responses[] = array_merge(array("kind" => $row["kind"], "box" => $proper_box ), $assoc_data);
 	}
+
     
 } catch(PDOException $ex) {
 	debugvar($ex);
