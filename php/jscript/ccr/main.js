@@ -9,27 +9,27 @@ define(['require',
         'cookies',
         './tbtools',
         './common_enhance',
-        'i18n!nls/tr', 'domReady!'
-       ], function (require, geometry, cv_enh, cx_enh, redraw, dynres, toastr, monthLayouts, cookies, tbtools, comnEnh, tr, document) {
+        'i18n!nls/tr', 'domReady!', 'jquery'
+       ], function (require, geometry, cv_enh, cx_enh, redraw, dynres, toastr, monthLayouts, cookies, tbtools, comnEnh, tr, document, jquery) {
 
     // as the data volume is quite large, we want agresive caching
-    $.ajaxSetup ({
+    jquery.ajaxSetup ({
        cache: true
     });
 
     // prepare top menu bar
     var timeout = null;
-    var initialMargin = parseInt($("#siteMenuBar").css("margin-top"));
-    $("#siteMenuBar").hover(
+    var initialMargin = parseInt(jquery("#siteMenuBar").css("margin-top"));
+    jquery("#siteMenuBar").hover(
         function() {
             if (timeout) {
                 clearTimeout(timeout);
                 timeout = null;
             }
-            $(this).animate({ marginTop: 0 }, 'fast');
+            jquery(this).animate({ marginTop: 0 }, 'fast');
         },
         function() {
-            var menuBar = $(this);
+            var menuBar = jquery(this);
             timeout = setTimeout(function() {
                 timeout = null;
                 menuBar.animate({ marginTop: initialMargin }, 'slow');

@@ -1,5 +1,5 @@
-define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  './DynResVect', ],
-       function (toastr, redraw, DynResText, DynResHtml, DynResImg, DynResVect) {
+define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  './DynResVect', 'jquery'],
+       function (toastr, redraw, DynResText, DynResHtml, DynResImg, DynResVect, jquery) {
 
 
     return {
@@ -27,7 +27,7 @@ define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  
 
             ++canvas.outstanding_requests;
 
-            $.ajax({
+            jquery.ajax({
                 async: true,
                 cache: true,
                 complete: function(xhr,status) {

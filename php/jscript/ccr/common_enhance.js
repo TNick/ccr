@@ -1,4 +1,4 @@
-define(function () {
+define(['jquery'], function (jquery) {
 
 
     return {
@@ -20,7 +20,7 @@ define(function () {
          */
         addClass: function (item_id,cl_name){
             // TODO remove jQuery dependency
-            $('#'+item_id).addClass(cl_name);
+            jquery('#'+item_id).addClass(cl_name);
         },
 
         /**
@@ -28,7 +28,7 @@ define(function () {
          */
         remClass: function (item_id,cl_name){
             // TODO remove jQuery dependency
-            $('#'+item_id).removeClass(cl_name);
+            jquery('#'+item_id).removeClass(cl_name);
         }
     };
 

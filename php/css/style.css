@@ -107,6 +107,7 @@ html, body {
     color: #FFF;
     cursor: default;
     background-color: #006;
+    border: 1px white solid;
 }
 
 #toolb a {
@@ -157,6 +158,32 @@ html, body {
 }
 
 /* ============================= */
-/*   device specific overrides   */
+/*          item editor          */
 /* ============================= */
 
+#itemeditor {
+    left: 50%;
+    top: 20%;
+    padding: 4px;
+
+    position: absolute;
+    z-index: 1;
+    color: #FFF;
+    cursor: default;
+    background-color: #006;
+    border: 1px white solid;
+}
+
+
+/* ============================= */
+/*        utility classes        */
+/* ============================= */
+
+.hidden {
+    display:none;
+}
+
+
+/* ============================= */
+/*   device specific overrides   */
+/* ============================= */
