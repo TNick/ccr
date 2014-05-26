@@ -1,31 +1,16 @@
-body {
-    margin: 0;
-    font-size: 1em;
-    background-color: white;
-
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    border: 0;
+    overflow: hidden; /*  Disable scrollbars */
+    display: block;  /* No floating content on sides */
 }
 
-#map {
-    background: #322;
 
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
 
-    margin: auto;
-}
 
-#map:active {
-}
+
 
 .mousecangrab {
     cursor: pointer;
@@ -42,58 +27,136 @@ body {
 }
 
 
+/* ============================= */
+/*           top menu            */
+/* ============================= */
+
+
+#siteMenuBar
+{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 30px;
+    margin-top: -27px;
+}
+
+#siteMenuBar > #menuContainer
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 25px;
+    padding-top: 5px;
+}
+
+#siteMenuBar ul
+{
+    float: right;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+#siteMenuBar li
+{
+    display: inline-block;
+    margin: 0;
+    padding: 0 5px 0 5px;
+    margin-right: 10px;
+}
+
+#siteMenuBar ul:first-child
+{
+    float: left;
+    margin-left: 10px;
+}
+
+.ui-widget {
+    font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    font-size: 1.1em;
+}
+
+.ui-widget-header {
+    border: 1px solid #e78f08;
+    background: #f6a828;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.ui-widget-header a {
+    color: #ffffff;
+}
+
+
+/* ============================= */
+/*            toolbar            */
+/* ============================= */
+
+
+#toolb {
+    left: 0px;
+    top: 20%;
+    padding: 4px;
+
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    color: #FFF;
+    cursor: default;
+    background-color: #006;
+}
+
+#toolb a {
+    display:inline-block;
+    color: #FFD;
+    margin: 0;
+    padding: 0;
+    width: 32px !important;
+    height: 32px !important;
+    line-height: 32px;
+}
+
+#toolb a:active {
+    background-color: #128;
+}
+
+#toolb a:hover {
+    background-color: #777;
+}
+
+#toolb ul {
+    float: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#toolb li {
+    margin: 0;
+    padding: 0 5px 8px 5px;
+}
+
+#toolb li.divider {
+    margin: 0;
+    padding: 0;
+    height: 15px;
+}
+
+#toolb img {
+    margin: 0;
+    width: 32px;
+    height: 32px;
+}
+
+.toolb_pressed {
+    border: 1px white solid;
+    background-color: #DD0;
+}
 
 /* ============================= */
 /*   device specific overrides   */
 /* ============================= */
 
-@media only screen and (min-width: 320px) {
-    /* Small screen, non-retina */
-    #map {
-        width: 310px;
-        height: 310px;
-    }
-
-}
-
-@media only screen and (min-device-pixel-ratio: 2) and (min-width: 320px) {
-    /* Small screen, retina, stuff to override above media query */
-    #map {
-        width: 310px;
-        height: 310px;
-    }
-
-}
-
-@media only screen and (min-width: 700px) {
-    /* Medium screen, non-retina */
-    #map {
-        width: 690px;
-        height: 700px;
-    }
-}
-
-@media only screen and (min-device-pixel-ratio: 2) and (min-width: 700px) {
-    /* Medium screen, retina, stuff to override above media query */
-    #map {
-        width: 690px;
-        height: 700px;
-    }
-
-}
-
-@media only screen and (min-width: 1300px) {
-    /* Large screen, non-retina */
-    #map {
-        width: 1200px;
-        height: 800px;
-    }
-}
-
-@media only screen and (min-device-pixel-ratio: 2) and (min-width: 1300px){
-    /* Large screen, retina, stuff to override above media query */
-    #map {
-        width: 1200px;
-        height: 800px;
-    }
-}

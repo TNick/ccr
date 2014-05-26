@@ -117,9 +117,17 @@ function (geometry, trdyn, tr) {
         now: function (canvas, context) {
 
             // Clear the entire canvas
-            var p1 = context.transformedPoint(0,0);
-            var p2 = context.transformedPoint(canvas.width,canvas.height);
-            context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
+            //var p1 = context.transformedPoint(0,0);
+            //var p2 = context.transformedPoint(canvas.width,canvas.height);
+            //context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
+
+            // Store the current transformation matrix
+            context.internal_change = 1;
+            context.save(); // Use the identity matrix while clearing the canvas
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.restore(); // Restore the transform
+            context.internal_change = undefined;
 
             canvas.config.monthLayout(canvas, context, drawMonth);
 

@@ -23,4 +23,5 @@ OTHER_FILES += \
     ../php/jscript/lib-debug/domReady.js \
     ../php/jscript/ccr/DynResHtml.js \
     ../php/jscript/ccr/DynResImg.js \
-    ../php/jscript/ccr/DynResVect.js
+    ../php/jscript/ccr/DynResVect.js \
+    ../php/jscript/lib-debug/cookies.js
