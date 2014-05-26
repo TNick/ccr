@@ -107,10 +107,10 @@ try {
 	$myPDO = $pdo->prepare($query_base, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     
 	if($myPDO->execute(array(':layer' => $scale_categ, 
-						     ':left' => $view['left'], 
-						     ':top' => $view['top'], 
-						     ':right' => $view['right'], 
-						     ':bottom' => $view['bottom'], )))
+						     ':left' => $view->{'left'}, 
+						     ':top' => $view->{'top'}, 
+						     ':right' => $view->{'right'}, 
+						     ':bottom' => $view->{'bottom'}, )))
 	{
 		 
 		while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
