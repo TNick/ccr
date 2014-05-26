@@ -110,7 +110,7 @@ try {
 						     ':left' => $view->{'left'}, 
 						     ':top' => $view->{'top'}, 
 						     ':right' => $view->{'right'}, 
-						     ':bottom' => $view->{'bottom'}, )))
+						     ':bottom' => $view->{'bottom'} )))
 	{
 		 
 		while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
