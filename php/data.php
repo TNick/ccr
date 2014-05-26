@@ -1,4 +1,7 @@
 <?php
+
+// http://stackoverflow.com/questions/12859942/why-shouldnt-i-use-mysql-functions-in-php
+
 function debugmsg($foo)
 {
    file_put_contents('php://stderr', print_r(
@@ -64,48 +67,88 @@ if (array_key_exists("view", $data_back)) {
 // OPENSHIFT specific
 $host = getenv('OPENSHIFT_MYSQL_DB_HOST');
 $port = getenv('OPENSHIFT_MYSQL_DB_PORT');
+$user = '';
+$pass = '';
 if ($host) {
     if ($port) {
         $host = $host . ":" . $port;
     }
-    $link = mysql_connect($host, getenv('OPENSHIFT_MYSQL_DB_USERNAME'), getenv('OPENSHIFT_MYSQL_DB_PASSWORD'))
-        or returnError('Could not connect: ' . mysql_error());
+    $user = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
+    $pass = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
+    //$link = mysql_connect($host, $user, $pass)
+    //    or returnError('Could not connect: ' . mysql_error());
     $database = getenv('OPENSHIFT_APP_NAME');
 } else {
     returnError(json_encode("Unknown environment"));
 }
+
+$pdo = new PDO ('mysql:host=' . $host . ';dbname=' . $database . ';charset=utf8', $user, $pass);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
 debugmsg('Connected successfully');
 
 
-mysql_select_db($database) or returnError('Could not select database');
+// mysql_select_db($database) or returnError('Could not select database');
 
 // we define a polygone (a rectangle) and ask for all records that intersect that rectangle
 // and are part of specified layer
-$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=%5$d AND Intersects( bbox, PolyFromText( 'POLYGON((%1$f %2$f,%3$f %2$f,%3$f %4$f,%1$f %4$f))' ) ) LIMIT 10000000;";
-debugvar($query_base);
-$query = sprintf($query_base, $view->{"left"}, $view->{"top"}, $view->{"right"}, $view->{"bottom"}, $scale_categ);
-debugvar($query);
-$responses = mysql_query($query) or returnError('Query failed: ' . mysql_error());
+//$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=%5$d AND Intersects( bbox, PolyFromText( 'POLYGON((%1$f %2$f,%3$f %2$f,%3$f %4$f,%1$f %4$f))' ) ) LIMIT 10000000;";
+//debugvar($query_base);
+//$query = sprintf($query_base, $view->{"left"}, $view->{"top"}, $view->{"right"}, $view->{"bottom"}, $scale_categ);
+//debugvar($query);
+//$responses = mysql_query($query) or returnError('Query failed: ' . mysql_error());
 
 // create json response
 $responses = array();
 
-while ($row = mysql_fetch_assoc($responses, MYSQL_ASSOC)) {
-    debugmsg($row["kind"]);
-    debugmsg($row["bbox"]);
-    debugmsg($row["assoc_data"]);
+$query_base = "SELECT kind,AsText(bbox),assoc_data FROM spatialdata WHERE layer=:layer AND Intersects( bbox, PolyFromText( 'POLYGON((:left :top,:right :top,:right :bottom,:left bottom))' ) ) LIMIT 10000000;";
+try {
+	$myPDO = $pdo->prepare($query_base, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    
+	if($myPDO->execute(array(':layer' => $scale_categ, 
+						     ':left' => $view['left'], 
+						     ':top' => $view['top'], 
+						     ':right' => $view['right'], 
+						     ':bottom' => $view['bottom'], )))
+	{
+		 
+		while($row = $myPDO->fetch(PDO::FETCH_ASSOC)) {
+			debugmsg($row["kind"]);
+			debugmsg($row["bbox"]);
+			debugmsg($row["assoc_data"]);
 
-    $assoc_data = unserialize($row["assoc_data"]); // $row["assoc_data"]) = serialize($assoc_data);
-    $coords = getRealNumbers($row["bbox"]);
-    $proper_box = array($coords[0], $coords[1], $coords[2], $coords[5]);
-    $responses[] = array_merge(array("kind" => $row["kind"], "box" => $proper_box ), $assoc_data);
+			$assoc_data = unserialize($row["assoc_data"]); // $row["assoc_data"]) = serialize($assoc_data);
+			$coords = getRealNumbers($row["bbox"]);
+			$proper_box = array($coords[0], $coords[1], $coords[2], $coords[5]);
+			$responses[] = array_merge(array("kind" => $row["kind"], "box" => $proper_box ), $assoc_data);
+		}
+	}
+    
+} catch(PDOException $ex) {
+	returnError(json_encode("Failed to querry database: " . $ex->getMessage()));
 }
 
+
+
+
+
+//while ($row = mysql_fetch_assoc($responses, MYSQL_ASSOC)) {
+    //debugmsg($row["kind"]);
+    //debugmsg($row["bbox"]);
+    //debugmsg($row["assoc_data"]);
+
+    //$assoc_data = unserialize($row["assoc_data"]); // $row["assoc_data"]) = serialize($assoc_data);
+    //$coords = getRealNumbers($row["bbox"]);
+    //$proper_box = array($coords[0], $coords[1], $coords[2], $coords[5]);
+    //$responses[] = array_merge(array("kind" => $row["kind"], "box" => $proper_box ), $assoc_data);
+//}
+
 // Free resultset
-mysql_free_result($responses);
+// mysql_free_result($responses);
 
 // Closing connection
-mysql_close($link);
+// mysql_close($link);
 
 
 
