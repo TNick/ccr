@@ -6,6 +6,7 @@ define(['jquery'], function (jquery) {
          * add event
          */
         registerEvent: function (item,ev_name,func){
+            try{
             if (item.attachEvent) {
                 item.attachEvent('on'+ev_name, func);
             } else if (item.addEventListener) {
@@ -13,6 +14,9 @@ define(['jquery'], function (jquery) {
             } else {
                 // The browser does not support Javascript event binding
             }
+            } catch(exc) {
+                console.log(exc);
+            };
         },
 
         /**

@@ -66,19 +66,19 @@
             <li class="divider"></li>
 
             <li><a href="#"
-                id="toolb_add_vector"
+                id="toolb_addvector"
                 title="Add a vector in current scale level"><img
                 src="img/toolb_add_vector.png"></a></li>
             <li><a href="#"
-                id="toolb_add_text"
+                id="toolb_addtext"
                 title="Add simple text in current scale level"><img
                 src="img/toolb_add_text.png"></a></li>
             <li><a href="#"
-                id="toolb_add_html"
+                id="toolb_addhtml"
                 title="Add formatted text in current scale level"><img
                 src="img/toolb_add_html.png"></a></li>
             <li><a href="#"
-                id="toolb_add_image"
+                id="toolb_addimage"
                 title="Add an image in current scale level"><img
                 src="img/toolb_add_image.png"></a></li>
 
@@ -88,7 +88,7 @@
 
     <div id="itemeditor" class="tabber ccrdialog hidden">
 
-        <div class="tabbertab">
+        <div id="itemeditor_vector" class="tabbertab">
             <h2>Vector</h2>
             <p class="tabbertab_description">
                 <img
@@ -112,7 +112,7 @@
             </tr></table>
         </div>
 
-        <div class="tabbertab ccrdialog">
+        <div id="itemeditor_text" class="tabbertab">
             <h2>Text</h2>
             <p class="tabbertab_description">
                 <img
@@ -144,7 +144,7 @@
 
         </div>
 
-        <div class="tabbertab">
+        <div id="itemeditor_html" class="tabbertab">
             <h2>Rich Text</h2>
             <p class="tabbertab_description">
                 <img
@@ -157,7 +157,7 @@
             <textarea rows="8" cols="26" placeholder="HTML formatted text"></textarea>
         </div>
 
-        <div class="tabbertab">
+        <div id="itemeditor_image" class="tabbertab">
             <h2>Image</h2>
             <p class="tabbertab_description">
                 <img
@@ -175,8 +175,8 @@
 
         <p>Layer: <span id="itemeditor_layer">1</span></p>
         <form>
-            <button type="button" name="ok">OK</button>
-            <button type="button" name="cancel">Cancel</button>
+            <button id="itemeditor_create" type="button" name="create">Create</button>
+            <button id="itemeditor_close" type="button" name="close">Close</button>
         </form>
 
     </div>
@@ -213,8 +213,8 @@
         </div>
 
         <form>
-            <button type="button" name="ok">OK</button>
-            <button type="button" name="cancel">Cancel</button>
+            <button id="ccrsettings_apply" type="button" name="apply">Apply</button>
+            <button id="ccrsettings_close" type="button" name="close">Close</button>
         </form>
 
     </div>

@@ -3,8 +3,15 @@ define(['./geometry',
         './month_layouts',
         'cookies',
         './common_enhance',
+        './toolbar_dialog',
         'i18n!nls/tr'],
-function (geometry, redraw, monthLayouts, cookies, comnEnh, tr) {
+function (geometry,
+          redraw,
+          monthLayouts,
+          cookies,
+          comnEnh,
+          tbDlg,
+          tr) {
 
     function commonResizeOp(canvas) {
         //        canvas.width = canvas.offsetWidth;
@@ -86,14 +93,14 @@ function (geometry, redraw, monthLayouts, cookies, comnEnh, tr) {
             },false);
 
             var scaleFactor = 1.1;
-            var zoom = function(clicks){
+            var zoom = function(clicks) {
                 var pt = ctx.transformedPoint(lastX,lastY);
                 ctx.translate(pt.x,pt.y);
                 var factor = Math.pow(scaleFactor,clicks);
                 ctx.scale(factor,factor);
                 ctx.translate(-pt.x,-pt.y);
                 redraw.now(canvas, ctx);
-            }
+            };
 
             var handleScroll = function(evt){
                 var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 0;
@@ -123,10 +130,7 @@ function (geometry, redraw, monthLayouts, cookies, comnEnh, tr) {
 
             canvas.setMouseMode = function(new_mode) {
                 canvas.config.click_action = new_mode;
-                comnEnh.remClass('toolb_pan','toolb_pressed');
-                comnEnh.remClass('toolb_zoomin','toolb_pressed');
-                comnEnh.remClass('toolb_zoomout','toolb_pressed');
-                comnEnh.addClass('toolb_'+new_mode,'toolb_pressed');
+                tbDlg.activate(new_mode);
                 canvas.saveConfigToCookie(canvas.config);
             };
 

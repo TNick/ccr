@@ -52,20 +52,14 @@ define(['./common_enhance',
         // Move drag element by the same amount the cursor has moved.
         var drLeft = (dragObj.elStartLeft + x - dragObj.cursorStartX);
         var drTop = (dragObj.elStartTop  + y - dragObj.cursorStartY);
-        if (drLeft > 0)
-        {
+        if (drLeft > 0)        {
             dragObj.elNode.style.left = drLeft  + "px";
-        }
-        else
-        {
+        }        else        {
             dragObj.elNode.style.left = "1px";
         }
-        if (drTop > 0)
-        {
+        if (drTop > 0)        {
             dragObj.elNode.style.top  = drTop + "px";
-        }
-        else
-        {
+        }        else        {
             dragObj.elNode.style.top  = "1px";
         }
         try {
