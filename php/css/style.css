@@ -7,11 +7,6 @@ html, body {
     display: block;  /* No floating content on sides */
 }
 
-
-
-
-
-
 .mousecangrab {
     cursor: pointer;
     cursor: grab;
@@ -218,6 +213,41 @@ html, body {
     display:none;
 }
 
+/* ============================= */
+/*             pages             */
+/* ============================= */
+
+.page_title {
+    font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    font-size: 1.5em;
+    margin: 2em;
+    display:block;
+}
+
+.page_content {
+    font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    font-size: 1em;
+    padding: 2em;
+    margin: 2em;
+    display:block;
+    background: #F9C775;
+}
+
+.page_content a {
+    color: #339933;
+}
+
+.page_content a:hover {
+    color: #339933;
+}
+
+.page_content a:visited {
+    color: #339933;
+}
+
+.page_content dt {
+    font-weight: bold;
+}
 
 /* ============================= */
 /*   device specific overrides   */
