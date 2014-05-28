@@ -1,10 +1,24 @@
 define(['./common_enhance',
         './tbtools',
         'tabber',
+        './ccr',
         'domReady!'], function (comnEnh,
                                 tbtools,
                                 Tabber,
+                                ccr_singleton,
                                 document) {
+
+
+    function parseDialog() {// todo
+        // ccr_singleton.canvas()
+        //        gensett_resize
+        //        gensett_layout
+        //        advsett_dataurl
+        //        advsett_timeout
+        //        advsett_database
+        //        advsett_scales
+
+    }
 
     return {
         prepare: function() {
@@ -25,7 +39,8 @@ define(['./common_enhance',
             comnEnh.registerEvent(
                         document.getElementById('ccrsettings_apply'),
                         'click',
-                        function(event){ // todo
+                        function(event){
+                            parseDialog();
                         });
             comnEnh.registerEvent(
                         document.getElementById('ccrsettings_close'),

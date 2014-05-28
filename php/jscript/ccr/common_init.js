@@ -15,6 +15,13 @@ define(['domReady!',
                cache: true
             });
 
+            if (typeof String.prototype.startsWith != 'function') {
+                // see below for better implementation!
+                String.prototype.startsWith = function (str){
+                    return this.indexOf(str) === 0;
+                };
+            }
+
             // prepare top menu bar
             var timeout = null;
             var initialMargin = parseInt(jquery("#siteMenuBar").css("margin-top"));

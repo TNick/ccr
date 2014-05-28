@@ -21,6 +21,9 @@ html, body {
     cursor: -moz-grabbing;
 }
 
+.mousecrosshair {
+    cursor: crosshair;
+}
 
 /* ============================= */
 /*           top menu            */
@@ -98,13 +101,17 @@ html, body {
     cursor: default;
     background-color: #006;
     border: 1px white solid;
+    font-size: 0.8em;
 }
 
 .ccrdialog button {
     width: 30%;
 }
 
-
+.ccrdialog form {
+    padding: 0.2em;
+    padding-top: 0.4em;
+}
 
 /* ============================= */
 /*            toolbar            */
@@ -171,7 +178,7 @@ html, body {
 #itemeditor {
     left: 50%;
     top: 20%;
-    width: 18em;
+    width: 20em;
 }
 
 #itemeditor input {
@@ -192,7 +199,7 @@ html, body {
 }
 
 .tabbertab_description {
-
+    padding: 0.2em;
 }
 
 /* ============================= */
@@ -202,7 +209,24 @@ html, body {
 #ccrsettings {
     left: 20%;
     top: 20%;
-    width: 18em;
+    width: 24em;
+}
+
+#ccrsettings input {
+    width: 11em !important;
+}
+
+#ccrsettings table {
+    width: 100%;;
+}
+
+#ccrsettings td {
+    text-align: right;
+}
+
+#ccrsettings textarea {
+    width: 100%;
+    max-width: 100%;
 }
 
 /* ============================= */

@@ -32,23 +32,68 @@
 
         <ul>
             <li>
-                a way to set scale boundaries
+                a way to set scale boundaries;
             </li>
 
             <li>
-                user accounts
+                user accounts;
             </li>
 
             <li>
-
+                refactor code to use events instead of direct calls (settin the box, changing current mode);
             </li>
 
             <li>
-
+                send either canvas or context, not both
             </li>
 
             <li>
-
+                Ideas for speeding up drawing:
+                <ul>
+                    <li>
+                        draw all days in one step to avoid changing characteristics
+                    </li>
+                    <li>
+                        draw all months - // -
+                    </li>
+                    <li>
+                        avoid using the DOM
+                    </li>
+                    <li>
+                        off screen rendering
+                    </li>
+                    <li>
+                        call beginPath <> stroke pair once (moveto allowed inside
+                    </li>
+                    <li>
+                        keep the state machine unchanged for as long as possible
+                    </li>
+                    <li>
+                        layer 2 or more canavas on top of each other (foreground - background)
+                    </li>
+                    <li>
+                        avoid shadow
+                    </li>
+                    <li>
+                        requestAnimationFrame from https://github.com/kof/animation-frame
+                    </li>
+                </ul>
+                References:
+                <li>
+                    <a href="http://gamedev.stackexchange.com/questions/37298/slow-firefox-javascript-canvas-performance">http://gamedev.stackexchange.com/questions/37298/slow-firefox-javascript-canvas-performance</a>
+                </li>
+                <li>
+                    <a href="http://www.html5rocks.com/en/tutorials/canvas/performance/">http://www.html5rocks.com/en/tutorials/canvas/performance/</a>
+                </li>
+                <li>
+                    <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=561361">https://bugzilla.mozilla.org/show_bug.cgi?id=561361</a>
+                </li>
+                <li>
+                    <a href="https://github.com/kof/animation-frame">https://github.com/kof/animation-frame</a>
+                </li>
+                <li>
+                    <a href="http://ie.microsoft.com/testdrive/Graphics/RequestAnimationFrame/Default.html#">http://ie.microsoft.com/testdrive/Graphics/RequestAnimationFrame/Default.html#</a>
+                </li>
             </li>
         </ul>
     </div>
@@ -62,7 +107,6 @@
                 <li><a href="/known_issues.html">Known Issues</a></li>
             </ul>
             <ul>
-                <li><a href="#">Settings</a></li>
             </ul>
         </div>
     </div>

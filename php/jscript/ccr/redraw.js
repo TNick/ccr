@@ -1,27 +1,6 @@
 define(['./geometry', 'nls/trdyn', 'i18n!nls/tr'],
 function (geometry, trdyn, tr) {
 
-    /*
-     * Ideas for speeding up drawing:
-     * - draw all days in one step to avoid changing characteristics
-     * - draw all months - // -
-     * - avoid using the DOM
-     * - off screen rendering
-     * - call beginPath <> stroke pair once (moveto allowed inside
-     * - keep the state machine unchanged for as long as possible
-     * - layer 2 or more canavas on top of each other (foreground - background)
-     * - avoid shadow
-     * - requestAnimationFrame from https://github.com/kof/animation-frame
-     *
-     * References:
-     * http://gamedev.stackexchange.com/questions/37298/slow-firefox-javascript-canvas-performance
-     * http://www.html5rocks.com/en/tutorials/canvas/performance/
-     * https://bugzilla.mozilla.org/show_bug.cgi?id=561361
-     * https://github.com/kof/animation-frame
-     * http://ie.microsoft.com/testdrive/Graphics/RequestAnimationFrame/Default.html#
-     */
-
-
     /**
      * Draws a day
      * @param {canvas} the element from where properties are extracted
@@ -166,14 +145,28 @@ function (geometry, trdyn, tr) {
             item.draw(canvas, context);
         });
 
+        // overlay
+        if (canvas.overlay) {
+            canvas.overlay(context);
+        }
     }
 
 
     return {
-        // works ok in all except firefox
-        now: performRedraw
+        //now: performRedraw
 
-        // works ok in all
         //now: function(canvas, context) { setTimeout(function() { performRedraw(canvas, context); }, 0); }
+        //        now: function(canvas, context) {
+        //            setTimeout(function() {
+        //                performRedraw(canvas, context);
+        //            }, 0);
+        //        }
+
+        now: function(canvas, context) {
+            window.requestAnimationFrame(function() {
+                performRedraw(canvas, context);
+            });
+        }
+
     };
 });

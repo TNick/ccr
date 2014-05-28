@@ -1,5 +1,5 @@
-define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  './DynResVect', 'jquery'],
-       function (toastr, redraw, DynResText, DynResHtml, DynResImg, DynResVect, jquery) {
+define(['toastr', './redraw', 'jquery'],
+       function (toastr, redraw, jquery) {
 
 
     return {
@@ -35,6 +35,7 @@ define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  
                 },
                 contentType: 'JSON', // The content type used when sending data to the server
                 data: JSON.stringify({
+                    kind: 'request',
                     database: canvas.database,
                     scale_categ: new_scale_categ,
                     view: ctx.transfRectView(canvas)
@@ -49,21 +50,7 @@ define(['toastr', './redraw', './DynResText',  './DynResHtml',  './DynResImg',  
                 success: function(result_array,status,xhr) {
                     toastr.success("data back");
                     console.log(result_array);
-                    result_array.forEach(function(result){
-                        if (result.kind === 'image') {
-                            canvas.sd_images.push(new DynResImg(canvas, result));
-                        } else if (result.kind === 'vector') {
-                            canvas.sd_vectors.push(new DynResVect(canvas, result));
-                        } else if (result.kind === 'html') {
-                            canvas.sd_html.push(new DynResHtml(canvas, result));
-                        } else if (result.kind === 'text') {
-                            canvas.sd_html.push(new DynResText(canvas, result));
-                        } else if (result.kind === 'error') {
-                            toastr.error('Failed to retreive resource: ' + result.value);
-                        }
-                        });
-                    // schedule an update
-                    canvas.scheduleUpdate();
+                    canvas.parseAjaxResponse(result_array);
                 },
                 timeout: 5000,
                 type: 'POST',

@@ -98,7 +98,7 @@
                 on the calendar.
             </p>
             <table><tr>
-            <td><label for="itemeditor_vect_back">Background:&nbsp;</label></td>
+            <td><label for="itemeditor_vect_back">Color:&nbsp;</label></td>
             <td><input type="text" id="itemeditor_vect_back" class ="colorpicker" value="#fff" placeholder="background" /></td>
             </tr><tr>
             <td><label for="itemeditor_vect_fore">Border:&nbsp;</label></td>
@@ -123,29 +123,32 @@
                 can be changed for entire block.
             </p>
             <table><tr>
-            <td><label for="itemeditor_font">Font:&nbsp;</label></td>
-            <td><input type="text" id="itemeditor_font" value="Verdana" placeholder="font" required="required" /></td>
+            <td><label for="itemeditor_text_value">Text:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_text_value" value="" placeholder="enter text here" required="required" /></td>
             </tr><tr>
-            <td><label for="itemeditor_color">Color:&nbsp;</label></td>
-            <td><input type="text" id="itemeditor_color" class ="colorpicker" value="#fff" placeholder="color" /></td>
+            <td><label for="itemeditor_text_font">Font:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_text_font" value="Verdana" placeholder="font" required="required" /></td>
             </tr><tr>
-            <td><label for="itemeditor_filled">Filled:&nbsp;</label></td>
-            <td><input type="checkbox" id="itemeditor_filled" value="1" /></td>
+            <td><label for="itemeditor_text_color">Color:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_text_color" class ="colorpicker" value="#fff" placeholder="color" /></td>
             </tr><tr>
-            <td><label for="itemeditor_italic">Italic:&nbsp;</label></td>
-            <td><input type="checkbox" id="itemeditor_italic" value="0" /></td>
+            <td><label for="itemeditor_text_filled">Filled:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_text_filled" value="1" /></td>
             </tr><tr>
-            <td><label for="itemeditor_bold">Bold:&nbsp;</label></td>
-            <td><input type="checkbox" id="itemeditor_bold" value="0" /></td>
+            <td><label for="itemeditor_text_italic">Italic:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_text_italic" value="0" /></td>
             </tr><tr>
-            <td><label for="itemeditor_size">Size:&nbsp;</label></td>
-            <td><input type="text" id="itemeditor_size" value="1" placeholder="Text height" required="required" min="0" max="500"/></td>
+            <td><label for="itemeditor_text_bold">Bold:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_text_bold" value="0" /></td>
+            </tr><tr>
+            <td><label for="itemeditor_text_size">Size:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_text_size" value="1" placeholder="Text height" required="required" min="0" max="500"/></td>
             </tr></table>
 
         </div>
 
         <div id="itemeditor_html" class="tabbertab">
-            <h2>Rich Text</h2>
+            <h2>Rich-Text</h2>
             <p class="tabbertab_description">
                 <img
                 src="img/toolb_add_html.png"
@@ -154,7 +157,7 @@
                 text using HTML format.
             </p>
 
-            <textarea rows="8" cols="26" placeholder="HTML formatted text"></textarea>
+            <textarea id="itemeditor_html_text" rows="8" cols="26" placeholder="HTML formatted text"></textarea>
         </div>
 
         <div id="itemeditor_image" class="tabbertab">
@@ -172,8 +175,16 @@
             <td><input type="text" id="itemeditor_image_url" value="http://" placeholder="address of the image" required="required" /></td>
             </tr></table>
         </div>
-
-        <p>Layer: <span id="itemeditor_layer">1</span></p>
+        <table><tr>
+        <td>Layer:</td>
+        <td id="itemeditor_layer">1</td>
+        </tr><tr>
+        <td>Day of year:</td>
+        <td id="itemeditor_doy">1</td>
+        </tr><tr>
+        <td><label for="itemeditor_box">Box:&nbsp;</label></td>
+        <td><input type="text" id="itemeditor_box" value="0;0;0;0"  placeholder="left;top;right;bottom" required="required" /></td>
+        </tr></table>
         <form>
             <button id="itemeditor_create" type="button" name="create">Create</button>
             <button id="itemeditor_close" type="button" name="close">Close</button>
@@ -190,8 +201,8 @@
             <td><label for="gensett_resize">Autoresize:&nbsp;</label></td>
             <td><input type="text" id="gensett_resize" value="data.php" placeholder="data source handler" required="required" /></td>
             </tr><tr>
-            <td><label for="gensett_resize">Auto Layout:&nbsp;</label></td>
-            <td><input type="checkbox" id="gensett_resize" value="0" /></td>
+            <td><label for="gensett_layout">Auto Layout:&nbsp;</label></td>
+            <td><input type="checkbox" id="gensett_layout" value="0" /></td>
             </tr></table>
 
         </div>
@@ -202,6 +213,9 @@
             <table><tr>
             <td><label for="advsett_dataurl">Data handler:&nbsp;</label></td>
             <td><input type="text" id="advsett_dataurl" value="data.php" placeholder="data source handler" required="required" /></td>
+            </tr><tr>
+            <td><label for="advsett_timeout">Timeout:&nbsp;</label></td>
+            <td><input type="text" id="advsett_timeout" value="5000" placeholder="timeout" /></td>
             </tr><tr>
             <td><label for="advsett_database">Database:&nbsp;</label></td>
             <td><input type="text" id="advsett_database" value="ccr" placeholder="database" /></td>
