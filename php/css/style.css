@@ -92,6 +92,26 @@ html, body {
 
 
 /* ============================= */
+/*          all dialogs          */
+/* ============================= */
+
+.ccrdialog {
+    padding: 4px;
+    position: absolute;
+    z-index: 1;
+    color: #FFF;
+    cursor: default;
+    background-color: #006;
+    border: 1px white solid;
+}
+
+.ccrdialog button {
+    width: 30%;
+}
+
+
+
+/* ============================= */
 /*            toolbar            */
 /* ============================= */
 
@@ -99,15 +119,7 @@ html, body {
 #toolb {
     left: 0px;
     top: 20%;
-    padding: 4px;
-
-    position: absolute;
-    z-index: 1;
     text-align: center;
-    color: #FFF;
-    cursor: default;
-    background-color: #006;
-    border: 1px white solid;
 }
 
 #toolb a {
@@ -164,20 +176,11 @@ html, body {
 #itemeditor {
     left: 50%;
     top: 20%;
-    padding: 4px;
     width: 18em;
-
-    position: absolute;
-    z-index: 1;
-    color: #FFF;
-    cursor: default;
-    background-color: #006;
-    border: 1px white solid;
 }
 
 #itemeditor input {
     width: 11em !important;
-
 }
 
 #itemeditor table {
@@ -193,14 +196,19 @@ html, body {
     max-width: 100%;
 }
 
-#itemeditor button {
-    width: 30%;
-}
-
 .tabbertab_description {
 
 }
 
+/* ============================= */
+/*       settings editor         */
+/* ============================= */
+
+#ccrsettings {
+    left: 20%;
+    top: 20%;
+    width: 18em;
+}
 
 /* ============================= */
 /*        utility classes        */

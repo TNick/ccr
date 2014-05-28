@@ -97,7 +97,7 @@ define(['require',
     canvas.setMouseMode(canvas.config.click_action);
 
     // prepare tabbed display of item editor
-    var tabberOptions = {
+    var itemeditor_options = {
         'cookie':"tabber", /* Name to use for the cookie */
         'onLoad': function(argsObj) {
             var t = argsObj.tabber;
@@ -128,10 +128,19 @@ define(['require',
         },
         div: document.getElementById('itemeditor')
     };
-    var itemeditor_tabber = new Tabber(tabberOptions);
+    var itemeditor_tabber = new Tabber(itemeditor_options);
     comnEnh.registerEvent(document.getElementById('itemeditor'),
                           'mousedown',
                           function(event){tbtools.dragStart(event, 'itemeditor');});
+
+   // prepare tabbed display of settings editor
+   var settings_options = {
+       div: document.getElementById('ccrsettings')
+   };
+   var settings_tabber = new Tabber(settings_options);
+   comnEnh.registerEvent(document.getElementById('ccrsettings'),
+                         'mousedown',
+                         function(event){tbtools.dragStart(event, 'ccrsettings');});
 
     // prepare color picker
     jscolor.dir = 'img/';
