@@ -84,6 +84,9 @@ try {
 	returnError(json_encode("Input data not properly encoded: " . $ex->getMessage()));
 }
 
+debugvar($_ENV);
+debugvar($_SERVER);
+
 // get database specific info
 $host = getenv('OPENSHIFT_MYSQL_DB_HOST');
 $port = NULL;
@@ -98,7 +101,19 @@ if ($host) { // OPENSHIFT specific
     $pass = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
     $database = getenv('OPENSHIFT_APP_NAME');
 } else {
-    returnError(json_encode("Unknown environment"));
+	
+	$host = getenv('CCR_MYSQL_DB_HOST');
+	if ($host) { // CCR specific
+		$port = getenv('CCR_MYSQL_DB_PORT');
+		if ($port) {
+			$host = $host . ":" . $port;
+		}
+		$user = getenv('CCR_MYSQL_DB_USERNAME');
+		$pass = getenv('CCR_MYSQL_DB_PASSWORD');
+		$database = getenv('CCR_MYSQL_DB_NAME');
+	} else {
+		returnError(json_encode("Unknown environment"));
+	}
 }
 
 // attempt a connection with provided information

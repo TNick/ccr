@@ -1,6 +1,26 @@
 define(['./geometry', 'nls/trdyn', 'i18n!nls/tr'],
 function (geometry, trdyn, tr) {
 
+    /*
+     * Ideas for speeding up drawing:
+     * - draw all days in one step to avoid changing characteristics
+     * - draw all months - // -
+     * - avoid using the DOM
+     * - off screen rendering
+     * - call beginPath <> stroke pair once (moveto allowed inside
+     * - keep the state machine unchanged for as long as possible
+     * - layer 2 or more canavas on top of each other (foreground - background)
+     * - avoid shadow
+     * - requestAnimationFrame from https://github.com/kof/animation-frame
+     *
+     * References:
+     * http://gamedev.stackexchange.com/questions/37298/slow-firefox-javascript-canvas-performance
+     * http://www.html5rocks.com/en/tutorials/canvas/performance/
+     * https://bugzilla.mozilla.org/show_bug.cgi?id=561361
+     * https://github.com/kof/animation-frame
+     * http://ie.microsoft.com/testdrive/Graphics/RequestAnimationFrame/Default.html#
+     */
+
 
     /**
      * Draws a day
@@ -118,35 +138,42 @@ function (geometry, trdyn, tr) {
         }
     }
 
+    function performRedraw  (canvas, context) {
+
+        // Clear the entire canvas
+        //var p1 = context.transformedPoint(0,0);
+        //var p2 = context.transformedPoint(canvas.width,canvas.height);
+        //context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
+
+        // Store the current transformation matrix
+        context.internal_change = 1;
+        context.save(); // Use the identity matrix while clearing the canvas
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.restore(); // Restore the transform
+        context.internal_change = undefined;
+
+        canvas.config.monthLayout(canvas, context, drawMonth);
+
+        // images, vectors and text
+        canvas.sd_images.forEach(function(item){
+            item.draw(canvas, context);
+        });
+        canvas.sd_vectors.forEach(function(item){
+            item.draw(canvas, context);
+        });
+        canvas.sd_html.forEach(function(item){
+            item.draw(canvas, context);
+        });
+
+    }
+
+
     return {
-        now: function (canvas, context) {
+        // works ok in all except firefox
+        now: performRedraw
 
-            // Clear the entire canvas
-            //var p1 = context.transformedPoint(0,0);
-            //var p2 = context.transformedPoint(canvas.width,canvas.height);
-            //context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
-
-            // Store the current transformation matrix
-            context.internal_change = 1;
-            context.save(); // Use the identity matrix while clearing the canvas
-            context.setTransform(1, 0, 0, 1, 0, 0);
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.restore(); // Restore the transform
-            context.internal_change = undefined;
-
-            canvas.config.monthLayout(canvas, context, drawMonth);
-
-            // images, vectors and text
-            canvas.sd_images.forEach(function(item){
-                item.draw(canvas, context);
-            });
-            canvas.sd_vectors.forEach(function(item){
-                item.draw(canvas, context);
-            });
-            canvas.sd_html.forEach(function(item){
-                item.draw(canvas, context);
-            });
-
-        } // enhance
+        // works ok in all
+        //now: function(canvas, context) { setTimeout(function() { performRedraw(canvas, context); }, 0); }
     };
 });

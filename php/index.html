@@ -10,6 +10,7 @@
 
     <!-- local assets -->
     <link rel="stylesheet" href="css/lib-debug/toastr.css" type="text/css">
+    <link rel="stylesheet" href="css/lib-debug/tabber.css" type="text/css">
     <link rel="stylesheet" href="css/normalize.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
@@ -63,7 +64,9 @@
                 id="toolb_zoomout"
                 title="ZoomOut mode: allows zooming out on mouse click"><img
                 src="img/toolb_zoomout.png"></a></li>
+
             <li class="divider"></li>
+
             <li><a href="#"
                 id="toolb_add_vector"
                 title="Add a vector in current scale level"><img
@@ -80,12 +83,103 @@
                 id="toolb_add_image"
                 title="Add an image in current scale level"><img
                 src="img/toolb_add_image.png"></a></li>
+
             <li class="divider"></li>
         </ul>
     </div>
 
-    <div id="itemeditor" class="hidden000">
-        <p>asdasdas</p>
+    <div id="itemeditor" class="tabber">
+
+        <div class="tabbertab">
+            <h2>Vector</h2>
+            <p class="tabbertab_description">
+                <img
+                src="img/toolb_add_vector.png"
+                align="right">
+                Vectors are geometric shapes that can be drawn directly
+                on the calendar.
+            </p>
+            <table><tr>
+            <td><label for="itemeditor_vect_back">Background:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_vect_back" class ="colorpicker" value="#fff" placeholder="background" /></td>
+            </tr><tr>
+            <td><label for="itemeditor_vect_fore">Border:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_vect_fore" class ="colorpicker" value="#000" placeholder="border" /></td>
+            </tr><tr>
+            <td><label for="itemeditor_vect_linew">Line width:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_vect_linew" value="1" placeholder="line width" required="required" min="0" max="500"/></td>
+            </tr><tr>
+            <td><label for="itemeditor_vect_closed">Closed:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_vect_closed" value="1" /></td>
+            </tr></table>
+        </div>
+
+        <div class="tabbertab">
+            <h2>Text</h2>
+            <p class="tabbertab_description">
+                <img
+                src="img/toolb_add_text.png"
+                align="right">
+                Simple labels can be added and customised.
+                The characteristics
+                can be changed for entire block.
+            </p>
+            <table><tr>
+            <td><label for="itemeditor_text_font">Font:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_text_font" value="Verdana" placeholder="font" required="required" /></td>
+            </tr><tr>
+            <td><label for="itemeditor_text_color">Color:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_text_color" class ="colorpicker" value="#fff" placeholder="color" /></td>
+            </tr><tr>
+            <td><label for="itemeditor_text_filled">Filled:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_text_filled" value="1" /></td>
+            </tr><tr>
+            <td><label for="itemeditor_text_italic">Italic:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_text_italic" value="0" /></td>
+            </tr><tr>
+            <td><label for="itemeditor_text_bold">Bold:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_text_bold" value="0" /></td>
+            </tr><tr>
+            <td><label for="itemeditor_text_size">Size:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_text_size" value="1" placeholder="Text height" required="required" min="0" max="500"/></td>
+            </tr></table>
+
+        </div>
+
+        <div class="tabbertab">
+            <h2>Rich Text</h2>
+            <p class="tabbertab_description">
+                <img
+                src="img/toolb_add_html.png"
+                align="right">
+                Text with complex formatting may also be added. Enter
+                text using HTML format.
+            </p>
+
+            <textarea rows="8" cols="26" placeholder="HTML formatted text"></textarea>
+        </div>
+
+        <div class="tabbertab">
+            <h2>Image</h2>
+            <p class="tabbertab_description">
+                <img
+                src="img/toolb_add_image.png"
+                align="right">
+                We use the World Wide Web to store the image and
+                only take its address. The image will be downloaded
+                from original location - we only store the address.
+            </p>
+            <table><tr>
+            <td><label for="itemeditor_image_url">URL:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_image_url" value="http://" placeholder="address of the image" required="required" /></td>
+            </tr></table>
+        </div>
+
+        <p>Layer: <span id="itemeditor_layer">1</span></p>
+        <form>
+            <button type="button" name="ok">OK</button>
+            <button type="button" name="cancel">Cancel</button>
+        </form>
 
     </div>
 

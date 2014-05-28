@@ -1,4 +1,5 @@
-define(['domReady!'], function (document) {
+define(['./common_enhance',
+        'domReady!'], function (comnEnh, document) {
 
 
     function getID(id)
@@ -31,17 +32,8 @@ define(['domReady!'], function (document) {
         if (isNaN(dragObj.elStartLeft)) dragObj.elStartLeft = 0;
         if (isNaN(dragObj.elStartTop))  dragObj.elStartTop  = 0;
         // Capture mousemove and mouseup events on the page.
-        try {
-            document.attachEvent("onmousemove", dragGo);
-            document.attachEvent("onmouseup",   dragStop);
-            window.event.cancelBubble = true;
-            window.event.returnValue = false;
-        }
-        catch (e) {
-            document.addEventListener("mousemove", dragGo,   true);
-            document.addEventListener("mouseup",   dragStop, true);
-            event.preventDefault();
-        }
+        comnEnh.registerEvent(mousemove, dragGo);
+        comnEnh.registerEvent(mouseup, dragStop);
     }
 
     function dragGo(event) {
@@ -87,14 +79,9 @@ define(['domReady!'], function (document) {
 
     function dragStop(event) {
         // Stop capturing mousemove and mouseup events.
-        try {
-            document.detachEvent("onmousemove", dragGo);
-            document.detachEvent("onmouseup",   dragStop);
-        }
-        catch (e) {
-            document.removeEventListener("mousemove", dragGo,   true);
-            document.removeEventListener("mouseup",   dragStop, true);
-        }
+        comnEnh.unregisterEvent(document, 'mousemove', dragGo);
+        comnEnh.unregisterEvent(document, 'mouseup', dragStop);
+        comnEnh.remClass(dragObj.elNode.id,'mousegrabbing');
     }
 
     return {
@@ -124,17 +111,11 @@ define(['domReady!'], function (document) {
             if (isNaN(dragObj.elStartLeft)) dragObj.elStartLeft = dragObj.elNode.offsetLeft;
             if (isNaN(dragObj.elStartTop))  dragObj.elStartTop  = dragObj.elNode.offsetTop;
             // Capture mousemove and mouseup events on the page.
-            try {
-                document.attachEvent("onmousemove", dragGo);
-                document.attachEvent("onmouseup",   dragStop);
-                window.event.cancelBubble = true;
-                window.event.returnValue = false;
-            }
-            catch (e) {
-                document.addEventListener("mousemove", dragGo,   true);
-                document.addEventListener("mouseup",   dragStop, true);
-                event.preventDefault();
-            }
+
+            comnEnh.registerEvent(document, 'mousemove', dragGo);
+            comnEnh.registerEvent(document, 'mouseup', dragStop);
+
+            comnEnh.addClass(id,'mousegrabbing');
         }
 
     };

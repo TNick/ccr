@@ -16,6 +16,19 @@ define(['jquery'], function (jquery) {
         },
 
         /**
+         * remove event
+         */
+        unregisterEvent: function (item,ev_name,func){
+            if (item.detachEvent) {
+                item.detachEvent('on'+ev_name, func);
+            } else if (item.removeEventListener) {
+                item.removeEventListener(ev_name, func, false);
+            } else {
+                // The browser does not support Javascript event binding
+            }
+        },
+
+        /**
          * add class
          */
         addClass: function (item_id,cl_name){
