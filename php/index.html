@@ -123,23 +123,23 @@
                 can be changed for entire block.
             </p>
             <table><tr>
-            <td><label for="itemeditor_text_font">Font:&nbsp;</label></td>
-            <td><input type="text" id="itemeditor_text_font" value="Verdana" placeholder="font" required="required" /></td>
+            <td><label for="itemeditor_font">Font:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_font" value="Verdana" placeholder="font" required="required" /></td>
             </tr><tr>
-            <td><label for="itemeditor_text_color">Color:&nbsp;</label></td>
-            <td><input type="text" id="itemeditor_text_color" class ="colorpicker" value="#fff" placeholder="color" /></td>
+            <td><label for="itemeditor_color">Color:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_color" class ="colorpicker" value="#fff" placeholder="color" /></td>
             </tr><tr>
-            <td><label for="itemeditor_text_filled">Filled:&nbsp;</label></td>
-            <td><input type="checkbox" id="itemeditor_text_filled" value="1" /></td>
+            <td><label for="itemeditor_filled">Filled:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_filled" value="1" /></td>
             </tr><tr>
-            <td><label for="itemeditor_text_italic">Italic:&nbsp;</label></td>
-            <td><input type="checkbox" id="itemeditor_text_italic" value="0" /></td>
+            <td><label for="itemeditor_italic">Italic:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_italic" value="0" /></td>
             </tr><tr>
-            <td><label for="itemeditor_text_bold">Bold:&nbsp;</label></td>
-            <td><input type="checkbox" id="itemeditor_text_bold" value="0" /></td>
+            <td><label for="itemeditor_bold">Bold:&nbsp;</label></td>
+            <td><input type="checkbox" id="itemeditor_bold" value="0" /></td>
             </tr><tr>
-            <td><label for="itemeditor_text_size">Size:&nbsp;</label></td>
-            <td><input type="text" id="itemeditor_text_size" value="1" placeholder="Text height" required="required" min="0" max="500"/></td>
+            <td><label for="itemeditor_size">Size:&nbsp;</label></td>
+            <td><input type="text" id="itemeditor_size" value="1" placeholder="Text height" required="required" min="0" max="500"/></td>
             </tr></table>
 
         </div>
@@ -185,10 +185,31 @@
 
         <div class="tabbertab">
             <h2>General</h2>
+
+            <table><tr>
+            <td><label for="gensett_resize">Autoresize:&nbsp;</label></td>
+            <td><input type="text" id="gensett_resize" value="data.php" placeholder="data source handler" required="required" /></td>
+            </tr><tr>
+            <td><label for="gensett_resize">Auto Layout:&nbsp;</label></td>
+            <td><input type="checkbox" id="gensett_resize" value="0" /></td>
+            </tr></table>
+
         </div>
 
         <div class="tabbertab">
             <h2>Advanced</h2>
+
+            <table><tr>
+            <td><label for="advsett_dataurl">Data handler:&nbsp;</label></td>
+            <td><input type="text" id="advsett_dataurl" value="data.php" placeholder="data source handler" required="required" /></td>
+            </tr><tr>
+            <td><label for="advsett_database">Database:&nbsp;</label></td>
+            <td><input type="text" id="advsett_database" value="ccr" placeholder="database" /></td>
+            </tr><tr>
+            <td><label for="advsett_scales">Boundary scales:&nbsp;</label></td>
+            <td><input type="text" id="advsett_dataurl" value="4;25.5;60" placeholder="defines layers" required="required" /></td>
+            </tr></table>
+
         </div>
 
         <form>
